@@ -14,9 +14,17 @@ current_step = 0
 
 function play_sound(_reverb, _surface)
 {
+	var _ef_bit = audio_effect_create(AudioEffectType.Bitcrusher)
 	var _ef_reverb = audio_effect_create(AudioEffectType.Reverb1)
-	_ef_reverb.size = _reverb
+	var _hp_effect = audio_effect_create(AudioEffectType.HPF2);
+
+	_ef_bit.factor = 20;
+	_ef_reverb.size = _reverb;
+	_hp_effect.cutoff = 2000;
+	
 	audio_bus_main.effects[0] = _ef_reverb
+	audio_bus_main.effects[1] = _ef_bit
+	audio_bus_main.effects[3] = _hp_effect;
 	
 	current_step++;
 	if (current_step > 3)
